@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
 typedef struct list
 {
@@ -51,6 +52,29 @@ void print_list(list*h, char* title)
     }
 }
 
+int count(list*h)
+{
+    if (h == NULL)
+        return 0;
+    else
+        return(1 + count(h->next));
+}
+
+void concat(list* h1, list* h2)
+{
+    assert(h1 != NULL);
+    if (h1->next == NULL)
+        h1->next = h2;
+    else
+        concat(h1->next, h2);    
+}
+
+void insert(list* p1, list*p2, list* input)
+{
+    p1->next = input;
+    input->next = p2;
+}
+
 int main(void)
 {
     list list_of_int;
@@ -59,6 +83,7 @@ int main(void)
     head = array_to_list(data, 6);
     print_list(head, "multiple element list");
     printf("\n\n");
+    printf("The list is has %d elements\n\n", count(head) );
     return 0;
 }
 
